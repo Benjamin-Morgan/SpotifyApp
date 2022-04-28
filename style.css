@@ -1,0 +1,20 @@
+.btn.dropdown-toggle {
+    width: 150px;
+    text-align: left;
+}
+
+span.caret {
+    position: absolute;
+    left: 90%;
+    top: 45%
+}
+
+label {
+    padding-top: 5px;
+}
+
+.form-label {
+    padding-left: 0px !important;
+}
+
+
