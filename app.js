@@ -1,3 +1,5 @@
+const { text } = require("body-parser");
+
 const APIController = (function () {
 
 
@@ -86,7 +88,7 @@ const APIController = (function () {
 })();
 
 //UI Module, IIFE
-const UIController = (function() {
+const UIController = (function () {
     //object to hold references to html selectors
     const DOMElements = {
         selectGenre: '#select_genre',
@@ -101,7 +103,7 @@ const UIController = (function() {
     return {
 
         //method to get input fields
-        inputField(){
+        inputField() {
             return {
                 genre: document.querySelector(DOMElements.selectGenre),
                 playlist: document.querySelector(DOMElements.selectPlaylist),
@@ -109,6 +111,40 @@ const UIController = (function() {
                 submit: document.querySelector(DOMElements.buttonSubmit),
                 SongDetail: document.querySelector(DOMElements.divSongDetail)
             }
+        },
+
+        //need mthods to create select list option
+        createGenre(text, value) {
+            const html = `<option value'${value}'>${text}</option>`;
+            document.querySelector(DOMElements.selectGenre).insertAdjacentHTML('beforeend', html);
+        },
+
+        createPlaylist(text, value) {
+            const html = `<option value="${value}">${text}</option>`;
+            document.querySelector(DOMElements.selectPlaylist).insertAdjacentHTML('beforeend', html);
+        },
+
+        //need method to create a track list group item
+        createTrack(id, name){
+            const html = `<a href="#" class='list-group-item list-group-item-action list-group-item-light' id='${id}'>${name}</a>`;
+            document.querySelector(DOMElements.divSongList).insertAdjacentHTML('beforeend', html);
+        },
+
+        //need method to create song detail
+
+        createTrackDetail(img, title, artist){
+            const detailDiv = document.querySelector(DOMElements.divSongDetail);
+            //anytime user clicks a new song,w e need to clear out the song detail div
+            detailDiv.innerHTML = '';
+
+            const html = 
+            `
+            <div class='row col-sm-12 px-0'>
+            <img src='${img}' alt=''>
+            </div>
+
+            
+            `
         }
     }
 })
