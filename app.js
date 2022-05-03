@@ -45,7 +45,7 @@ const APIController = (function () {
     }
 
     const _getTracks = async (token, tracksEndPoint) => {
-        const limit 10;
+        const limit = 10;
 
         const result = await fetch(`${tracksEndPoint}?limit=${limit}`, {
             method: 'GET',
@@ -65,4 +65,24 @@ const APIController = (function () {
         const data = await result.json();
         return data;
     }
-})
+
+    return {
+        getToken() {
+            return _getToken();
+        },
+        _getGenres(token) {
+            return _getGenres(token);
+        },
+        _getPlaylistByGenre(token, genreID) {
+            return _getPlaylistByGenre(token, genreID);
+        },
+        _getTracks(token, tracksEndPoint) {
+            return _getTracks(token, tracksEndPoint);
+        },
+        getTrack(tokem, tracksEndPoint) {
+            return _getTrack(toke, tracksEndPoint);
+        }
+    }
+})();
+
+
