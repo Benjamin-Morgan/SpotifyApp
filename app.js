@@ -85,4 +85,32 @@ const APIController = (function () {
     }
 })();
 
+//UI Module, IIFE
+const UIController = (function() {
+    //object to hold references to html selectors
+    const DOMElements = {
+        selectGenre: '#select_genre',
+        selectPlaylist: '#select_playlist',
+        buttonSubmit: '#btn_submit',
+        divSongDetail: '#song-detail',
+        hfToken: '#hidden_token',
+        divSongList: '.song-list'
+    }
+
+    //public methods
+    return {
+
+        //method to get input fields
+        inputField(){
+            return {
+                genre: document.querySelector(DOMElements.selectGenre),
+                playlist: document.querySelector(DOMElements.selectPlaylist),
+                tracks: document.querySelector(DOMElements.divSongList),
+                submit: document.querySelector(DOMElements.buttonSubmit),
+                SongDetail: document.querySelector(DOMElements.divSongDetail)
+            }
+        }
+    }
+})
+
 
