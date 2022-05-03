@@ -1,4 +1,4 @@
-const APIController = (function(){
+const APIController = (function () {
 
 
     const clientId = 'add your client ID' //add my id here
@@ -12,8 +12,8 @@ const APIController = (function(){
             method: 'POST',
             headers: {
                 // taken from Spotify api docs
-                'Content-Type' : 'application/x-www-form-urlencoded',
-                'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
             },
             body: 'grant_type=client_credentials'
         });
@@ -25,7 +25,7 @@ const APIController = (function(){
     const _getGenres = async (token) => {
         const result = await fetch(`https://api.spotify.com/v1/browse/categories?locale=sv_US`, {
             method: 'GET',
-            headers: { 'Authorization' : 'Bearer ' + token}
+            headers: { 'Authorization': 'Bearer ' + token }
         });
 
         const data = await result.json();
@@ -37,7 +37,32 @@ const APIController = (function(){
 
         const result = await fetch(`https://api.spotify.com/v1/browse/categories/${genreId}/playlists?limit=${limit}`, {
             method: 'GET',
-            headeres: { 'Authorization' : 'Bearer ' + token}
-        })
+            headeres: { 'Authorization': 'Bearer ' + token }
+        });
+
+        const data = await result.json();
+        return data.playlists.items;
+    }
+
+    const _getTracks = async (token, tracksEndPoint) => {
+        const limit 10;
+
+        const result = await fetch(`${tracksEndPoint}?limit=${limit}`, {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        const data = await result.json();
+        return data.items;
+    }
+
+    const _getTrack = async (token, tracksEndPoint) => {
+        const result = await fetch(`${tracksEndPoint}`, {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        const data = await result.json();
+        return data;
     }
 })
