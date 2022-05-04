@@ -125,28 +125,36 @@ const UIController = (function () {
         },
 
         //need method to create a track list group item
-        createTrack(id, name){
+        createTrack(id, name) {
             const html = `<a href="#" class='list-group-item list-group-item-action list-group-item-light' id='${id}'>${name}</a>`;
             document.querySelector(DOMElements.divSongList).insertAdjacentHTML('beforeend', html);
         },
 
         //need method to create song detail
 
-        createTrackDetail(img, title, artist){
+        createTrackDetail(img, title, artist) {
             const detailDiv = document.querySelector(DOMElements.divSongDetail);
             //anytime user clicks a new song,w e need to clear out the song detail div
             detailDiv.innerHTML = '';
 
-            const html = 
-            `
+            const html =
+                `
             <div class='row col-sm-12 px-0'>
-            <img src='${img}' alt=''>
+                <img src='${img}' alt=''>
             </div>
+            <div class='row col-sm-12 px-0'>
+                <label for='Genre' class='form-label' col-sm-12>${title}:</label>
+            </div>
+            <div class='row col-sm-12 px-0'>
+                <label for='artist class='form-label col-sm-12'>By ${artist}:</label> 
+            </div>
+            `;
 
-            
-            `
-        }
+            detailDiv.insertAdjacentHTML('beforeend', html)
+        },
     }
 })
+
+
 
 
