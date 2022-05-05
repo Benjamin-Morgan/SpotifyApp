@@ -87,7 +87,7 @@ const APIController = (function () {
     }
 })();
 
-//UI Module, IIFE
+//UI Module, IIFE this will be immediately invoked
 const UIController = (function () {
     //object to hold references to html selectors
     const DOMElements = {
@@ -152,8 +152,29 @@ const UIController = (function () {
 
             detailDiv.insertAdjacentHTML('beforeend', html)
         },
+
+        //methods for resetting app
+        resetTrackDetail() {
+            this.inputField().SongDetail.innerHTML = '';
+        },
+
+        resetTracks() {
+            this.inputField().tracks.innerHTML = '';
+            this.resetTrackDetail();
+        },
+
+        resetPlaylist() {
+            this.inputField().playlist.innerHTML = '';
+            this.resetTracks();
+        },
+
+        storeToken() {
+            return {
+                token: document.querySelector(DOMElements.hfToken).value
+            }
+        }
     }
-})
+})();
 
 
 
