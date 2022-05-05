@@ -1,4 +1,9 @@
-const { text } = require("body-parser");
+//module pattern (pre-ES6)
+    // emulates classes in JS
+    // good for organization and seperation of concerns
+    // utilizes closures and IIFEs
+
+import { text } from "body-parser";
 
 const APIController = (function () {
 
@@ -176,7 +181,7 @@ const UIController = (function () {
     }
 })();
 
-const AppController = (function(UICtrl, APICtrl){
+const AppController = (function (UICtrl, APICtrl) {
 
     //get input field object reference
     const DOMInputs = UICtrl.inputField();
@@ -189,7 +194,7 @@ const AppController = (function(UICtrl, APICtrl){
 
         //store token onto the page
         UICtrl.storeToken(token);
-        
+
         //get genres
         const genres = await APICtrl(token);
 
@@ -219,30 +224,55 @@ const AppController = (function(UICtrl, APICtrl){
         playlist.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
     });
 
-        //create submut button click event listener
-        DOMInputs.submit.addEventListener('click', async (e) => {
+    //create submut button click event listener
+    DOMInputs.submit.addEventListener('click', async (e) => {
 
-            //prevent page reset
-            e.preventDefault();
+        //prevent page reset
+        e.preventDefault();
 
-            //clear tracks
-            UICtrl.resetTracks();
+        //clear tracks
+        UICtrl.resetTracks();
 
-            //get token
-            const token = UICtrl.getStoredToken().token;
+        //get token
+        const token = UICtrl.getStoredToken().token;
 
-            //get playlist field
-            const playlistSelect = UICtrl.inputField().playlist;
+        //get playlist field
+        const playlistSelect = UICtrl.inputField().playlist;
 
-            //get track enedpoint based on selected playlist
-            const tracksEndPoint = playlistSelect.options[playlistSelect.selectedIndex].value;
+        //get track enedpoint based on selected playlist
+        const tracksEndPoint = playlistSelect.options[playlistSelect.selectedIndex].value;
 
-            //get list of tracks
-            const tracks = await APICtrl.getTracks(token, tracksEndPoint);
-            
-            //create a track list item
-            tracks.forEach(el => UICtrl.createTrack(el.track.href, el.track.name))
-        });
-})
+        //get list of tracks
+        const tracks = await APICtrl.getTracks(token, tracksEndPoint);
+
+        //create a track list item
+        tracks.forEach(el => UICtrl.createTrack(el.track.href, el.track.name))
+    });
+
+    //create song selection click event listener
+    DOMInputs.tracks.addEventListener('click', async (e) => {
+        //prevent page reset
+        e.preventDefault();
+        UICtrl.resetTrackDetail();
+        //get token
+        const token = UICtrl.getStoredToken().token;
+        //get track endpoint
+        const trackEndPoint = e.target.id;
+        //get track object
+        const track = await APICtrl.getTrack(token, trackEndPoint);
+        //load track details
+        UICtrl.createTrackDetail(track.album.images[2].url, track.name, track.artist[0].name);
+    });
+
+    return {
+        init() {
+            console.log('App is starting');
+            loadGenres();
+        }
+    }
+})(UIController, APIController);
+
+//will need to call a method to load the genres on page laod
+AppController.init();
 
 
