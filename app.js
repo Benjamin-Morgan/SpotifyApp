@@ -199,21 +199,50 @@ const AppController = (function(UICtrl, APICtrl){
 
     //create genre change event listener
     DOMInputs.genre.addEventListener('change', async () => {
+
         //reset playlist
         UICtrl.resetPlaylist();
+
         //get token that is stored pn page
         const token = UICtrl.getStoredToken().token;
+
         //get genres select field
         const genreSelect = UICtrl.inputField().genre;
+
         //get genre id associated with selected genre
         const genreId = genreSelect.options[genreSelect.selectedIndex].value;
+
         //get the playlist based on a genre
         const playlist = await APICtrl._getPlaylistByGenre(token, genreId);
+
         //create a playlist list item for every playlist returned
         playlist.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
     });
 
+        //create submut button click event listener
+        DOMInputs.submit.addEventListener('click', async (e) => {
 
+            //prevent page reset
+            e.preventDefault();
+
+            //clear tracks
+            UICtrl.resetTracks();
+
+            //get token
+            const token = UICtrl.getStoredToken().token;
+
+            //get playlist field
+            const playlistSelect = UICtrl.inputField().playlist;
+
+            //get track enedpoint based on selected playlist
+            const tracksEndPoint = playlistSelect.options[playlistSelect.selectedIndex].value;
+
+            //get list of tracks
+            const tracks = await APICtrl.getTracks(token, tracksEndPoint);
+            
+            //create a track list item
+            tracks.forEach(el => UICtrl.createTrack(el.track.href, el.track.name))
+        });
 })
 
 
