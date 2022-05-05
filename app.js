@@ -176,6 +176,44 @@ const UIController = (function () {
     }
 })();
 
+const AppController = (function(UICtrl, APICtrl){
 
+    //get input field object reference
+    const DOMInputs = UICtrl.inputField();
+
+    //get genres on page load
+    const loadGenres = async () => {
+
+        //get token
+        const token = await APICtrl.getToken();
+
+        //store token onto the page
+        UICtrl.storeToken(token);
+        
+        //get genres
+        const genres = await APICtrl(token);
+
+        //populate our genres select element
+        genres.forEach(element => UICtrl.createGenre(element.name, element.id));
+    }
+
+    //create genre change event listener
+    DOMInputs.genre.addEventListener('change', async () => {
+        //reset playlist
+        UICtrl.resetPlaylist();
+        //get token that is stored pn page
+        const token = UICtrl.getStoredToken().token;
+        //get genres select field
+        const genreSelect = UICtrl.inputField().genre;
+        //get genre id associated with selected genre
+        const genreId = genreSelect.options[genreSelect.selectedIndex].value;
+        //get the playlist based on a genre
+        const playlist = await APICtrl._getPlaylistByGenre(token, genreId);
+        //create a playlist list item for every playlist returned
+        playlist.forEach(p => UICtrl.createPlaylist(p.name, p.tracks.href));
+    });
+
+
+})
 
 
