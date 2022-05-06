@@ -1,15 +1,14 @@
-//module pattern (pre-ES6)
-    // emulates classes in JS
-    // good for organization and seperation of concerns
-    // utilizes closures and IIFEs
+// module pattern (pre-ES6)
+// emulates classes in JS
+// good for organization and seperation of concerns
+// utilizes closures and IIFEs
 
 import { text } from "body-parser";
 
 const APIController = (function () {
 
-
-    const clientId = 'add your client ID' //add my id here
-    const clientSecret = 'add my client secret' //add secret here
+    const clientId = '53424b27c7794937a20eea98104b145b'
+    const clientSecret = '235c5b3adb5d482abe589c7861643841'
 
     //private methods
     const _getToken = async () => {
@@ -86,14 +85,15 @@ const APIController = (function () {
         _getTracks(token, tracksEndPoint) {
             return _getTracks(token, tracksEndPoint);
         },
-        getTrack(tokem, tracksEndPoint) {
-            return _getTrack(toke, tracksEndPoint);
+        getTrack(token, tracksEndPoint) {
+            return _getTrack(token, tracksEndPoint);
         }
     }
 })();
 
-//UI Module, IIFE this will be immediately invoked
+//UI Module, IIFE, this will be immediately invoked
 const UIController = (function () {
+
     //object to hold references to html selectors
     const DOMElements = {
         selectGenre: '#select_genre',
@@ -118,7 +118,7 @@ const UIController = (function () {
             }
         },
 
-        //need mthods to create select list option
+        //need methods to create select list option
         createGenre(text, value) {
             const html = `<option value'${value}'>${text}</option>`;
             document.querySelector(DOMElements.selectGenre).insertAdjacentHTML('beforeend', html);
@@ -251,15 +251,21 @@ const AppController = (function (UICtrl, APICtrl) {
 
     //create song selection click event listener
     DOMInputs.tracks.addEventListener('click', async (e) => {
+
         //prevent page reset
         e.preventDefault();
+
         UICtrl.resetTrackDetail();
+
         //get token
         const token = UICtrl.getStoredToken().token;
+
         //get track endpoint
         const trackEndPoint = e.target.id;
+
         //get track object
         const track = await APICtrl.getTrack(token, trackEndPoint);
+
         //load track details
         UICtrl.createTrackDetail(track.album.images[2].url, track.name, track.artist[0].name);
     });
