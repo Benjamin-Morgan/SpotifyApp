@@ -2,11 +2,12 @@
 //  emultes classes in JS
 //  good for organization and separation of cencerns
 // implements IIFE and closures
+// TODO would like to seperate each sestion into own file
 
 const APIController = (function () {
 
-    const clientId = '53424b27c7794937a20eea98104b145b';
-    const clientSecret = '235c5b3adb5d482abe589c7861643841';
+    const clientId = '';
+    const clientSecret = '';
 
     // private methods
     const _getToken = async () => {
