@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { clientId, clientSecret } from "./keys.js";
 
 const APIController = (function () {
@@ -6,19 +5,6 @@ const APIController = (function () {
 
     clientId;
     clientSecret;
-=======
-// Module pattern (pre-ES6)
-//  emultes classes in JS
-//  good for organization and separation of cencerns
-// implements IIFE and closures
-// TODO would like to seperate each sestion into own file
-
-const APIController = (function () {
-
-    const clientId = '';
-    const clientSecret = '';
-
->>>>>>> 7e245671e2cb23bf2d5a1667a3054bd2f7403bfe
     // private methods
     const _getToken = async () => {
 
@@ -275,8 +261,4 @@ const APPController = (function (UICtrl, APICtrl) {
 })(UIController, APIController);
 
 // will need to call a method to load the genres on page load
-<<<<<<< HEAD
 APPController.init();
-=======
-APPController.init();
->>>>>>> 7e245671e2cb23bf2d5a1667a3054bd2f7403bfe
