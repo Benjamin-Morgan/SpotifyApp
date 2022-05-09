@@ -1,4 +1,4 @@
-import { clientId, clientSecret } from "./keys.js";
+import { clientId, clientSecret } from "./apiKeys.js";
 
 const APIController = (function () {
 
