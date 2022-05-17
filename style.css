@@ -20,6 +20,7 @@ label {
 img {
     width: 140px;
     height: 140px;
+    border: 10px solid black;
 }
 
 .btn-success{
